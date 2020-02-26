@@ -3,9 +3,7 @@
 require_once './parser.php';
 require_once './util.php';
 
-upload_file();
-
-if(isset($_GET["file_route"])){
+if(($success = upload_file()) == true){
     $file_route = $_GET["file_route"];
     $customers = customers_to_array($file_route);
 }
@@ -16,11 +14,10 @@ if(isset($_GET["file_route"])){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>PHP App</title>
+    <title>Calls</title>
 </head>
 <body>
     <div class="container">
@@ -28,10 +25,24 @@ if(isset($_GET["file_route"])){
             <div class="col-xs-12 col-md-6 col-md-offset-3">
                 <h1>Upload file</h1>
                 <form action="form.php" method="post" enctype="multipart/form-data">
-                    <label for="file">Select a file</label>
-                    <input class="form-control" type="file" name="file" id="file">
+                    <div class="form-group">
+                        <label for="file">Select a file</label>
+                        <input class="form-control" type="file" name="file" id="file">
+                    </div>
                     <button class="btn btn-primary" type="submit" name="submit">Submit</button>
                 </form>
+                <br>
+                <?php
+                if(isset($_GET["file_route"])){
+                    $file_name = basename($_FILES["file"]["name"]);
+
+                    echo "<div class='alert alert-info' role='alert'>File $file_name uploaded.</div>";
+                } else if(isset($_GET["error"])){
+                    $error = $_GET["error"];
+
+                    echo "<div class='alert alert-danger' role='alert'>$error</div>";
+                }
+                ?>
             </div>
         </div>
         <table class="table">

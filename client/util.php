@@ -7,14 +7,16 @@ function upload_file(){
         $type = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
         if($type != "csv"){
-            return "File format is not csv.";
+            $_GET["error"] = "File format is not csv.";
+            return false;
         }
 
         if(move_uploaded_file($_FILES["file"]["tmp_name"], $file)){
             $_GET["file_route"] = $file;
-            return "The file " . $file_name . "has been uploaded.";
-        } else {
-            return "Error uploading file.";
+            return true;
         }
+
+        $_GET["error"] = "Error uploading file.";
+        return false;
     }
 }
