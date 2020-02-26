@@ -1,8 +1,14 @@
 <?php
 
 require_once './parser.php';
+require_once './util.php';
 
-$customers = customers_to_array();
+upload_file();
+
+if(isset($_GET["file_route"])){
+    $file_route = $_GET["file_route"];
+    $customers = customers_to_array($file_route);
+}
 
 ?>
 
@@ -21,10 +27,10 @@ $customers = customers_to_array();
         <div class="row">
             <div class="col-xs-12 col-md-6 col-md-offset-3">
                 <h1>Upload file</h1>
-                <form action="parser.php" method="post" enctype="multipart/form-data">
+                <form action="form.php" method="post" enctype="multipart/form-data">
                     <label for="file">Select a file</label>
                     <input class="form-control" type="file" name="file" id="file">
-                    <button class="btn btn-primary" type="submit" onclick="">Submit</button>
+                    <button class="btn btn-primary" type="submit" name="submit">Submit</button>
                 </form>
             </div>
         </div>
@@ -40,16 +46,18 @@ $customers = customers_to_array();
             </thead>
             <tbody>
             <?php
-                foreach ($customers as $idx => $customer){
-            ?>
-            <tr>
-                <th scope="row"><?php echo $idx ?></th>
-                <td><?php echo $customer['calls_in_continent'] ?></td>
-                <td><?php echo $customer['duration_in_continent'] ?></td>
-                <td><?php echo $customer['calls'] ?></td>
-                <td><?php echo $customer['duration'] ?></td>
-            </tr>
-            <?php
+                if(isset($customers)) {
+                    foreach ($customers as $idx => $customer) {
+                        ?>
+                        <tr>
+                            <th scope="row"><?php echo $idx ?></th>
+                            <td><?php echo $customer['calls_in_continent'] ?></td>
+                            <td><?php echo $customer['duration_in_continent'] ?></td>
+                            <td><?php echo $customer['calls'] ?></td>
+                            <td><?php echo $customer['duration'] ?></td>
+                        </tr>
+                        <?php
+                    }
                 }
             ?>
             </tbody>

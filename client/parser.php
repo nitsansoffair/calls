@@ -2,8 +2,8 @@
 require_once '../classes/call.php';
 require_once '../classes/Customer.php';
 
-function customers_to_array(){
-    $customers = parse_customers();
+function customers_to_array($file_route){
+    $customers = parse_customers($file_route);
     $arr = [];
 
     foreach ($customers as $customer){
@@ -18,8 +18,8 @@ function customers_to_array(){
     return $arr;
 }
 
-function parse_customers(){
-    if(($calls = fopen("../data/calls.csv", "r")) != false){
+function parse_customers($file_route){
+    if(($calls = fopen($file_route, "r")) != false){
         $geonames = get_geonames();
         $customers = [];
 
