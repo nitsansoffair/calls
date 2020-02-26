@@ -1,8 +1,22 @@
 <?php
-include '../classes/call.php';
-include '../classes/Customer.php';
+require_once '../classes/call.php';
+require_once '../classes/Customer.php';
 
-parse_customers();
+function customers_to_array(){
+    $customers = parse_customers();
+    $arr = [];
+
+    foreach ($customers as $customer){
+        $arr[$customer->get_id()] = [
+            "calls_in_continent" => $customer->get_calls_in_continent(),
+            "duration_in_continent" => $customer->get_duration_in_continent(),
+            "calls" => $customer->get_calls(),
+            "duration" => $customer->get_duration()
+        ];
+    }
+
+    return $arr;
+}
 
 function parse_customers(){
     if(($calls = fopen("../data/calls.csv", "r")) != false){

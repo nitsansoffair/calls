@@ -4,8 +4,8 @@
 class Customer {
     private $id;
     private $continent;
-    private $calls_in_continent;
-    private $duration_in_continent;
+    private $calls_in_continent = 0;
+    private $duration_in_continent = 0;
     private $calls;
     private $duration_calls;
 

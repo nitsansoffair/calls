@@ -1,3 +1,11 @@
+<?php
+
+require_once './parser.php';
+
+$customers = customers_to_array();
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,10 +24,36 @@
                 <form action="parser.php" method="post" enctype="multipart/form-data">
                     <label for="file">Select a file</label>
                     <input class="form-control" type="file" name="file" id="file">
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <button class="btn btn-primary" type="submit" onclick="">Submit</button>
                 </form>
             </div>
         </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"># Id</th>
+                <th scope="col"># Calls from Continent</th>
+                <th scope="col">Duration of calls from continent</th>
+                <th scope="col"># Calls</th>
+                <th scope="col">Duration of calls</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+                foreach ($customers as $idx => $customer){
+            ?>
+            <tr>
+                <th scope="row"><?php echo $idx ?></th>
+                <td><?php echo $customer['calls_in_continent'] ?></td>
+                <td><?php echo $customer['duration_in_continent'] ?></td>
+                <td><?php echo $customer['calls'] ?></td>
+                <td><?php echo $customer['duration'] ?></td>
+            </tr>
+            <?php
+                }
+            ?>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
