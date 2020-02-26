@@ -22,9 +22,9 @@ class Call
         if($this->ip != null){
             $curl = curl_init("http://api.ipstack.com/" . $this->ip . "?access_key=1bbc2841a6647a4b4ce5176b79e6d9a0");
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            $json = curl_exec($curl);
+            $response = curl_exec($curl);
 
-            $this->continent_ip = json_decode($json)->continent_code;
+            $this->continent_ip = json_decode($response)->continent_code;
         }
     }
 

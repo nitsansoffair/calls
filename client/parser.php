@@ -4,10 +4,10 @@ require_once '../classes/Customer.php';
 
 function customers_to_array($file_route){
     $customers = parse_customers($file_route);
-    $arr = [];
+    $customers_arr = [];
 
     foreach ($customers as $customer){
-        $arr[$customer->get_id()] = [
+        $customers_arr[$customer->get_id()] = [
             "calls_in_continent" => $customer->get_calls_in_continent(),
             "duration_in_continent" => $customer->get_duration_in_continent(),
             "calls" => $customer->get_calls(),
@@ -15,7 +15,7 @@ function customers_to_array($file_route){
         ];
     }
 
-    return $arr;
+    return $customers_arr;
 }
 
 function parse_customers($file_route){

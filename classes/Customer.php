@@ -6,8 +6,8 @@ class Customer {
     private $continent;
     private $calls_in_continent = 0;
     private $duration_in_continent = 0;
-    private $calls;
-    private $duration_calls;
+    private $calls = 0;
+    private $duration_calls = 0;
 
     function __construct($id, $continent){
         $this->id = $id;
