@@ -9,11 +9,13 @@ function customers_to_array($file_route){
     foreach ($customers as $customer){
         $customers_arr[$customer->get_id()] = [
             "calls_in_continent" => $customer->get_calls_in_continent(),
-            "duration_in_continent" => $customer->get_duration_in_continent(),
+            "duration_in_continent" => parse_duration($customer->get_duration_in_continent()),
             "calls" => $customer->get_calls(),
-            "duration" => $customer->get_duration()
+            "duration" => parse_duration($customer->get_duration())
         ];
     }
+
+    ksort($customers_arr, SORT_NUMERIC);
 
     return $customers_arr;
 }
@@ -88,4 +90,23 @@ function get_continent($geonames, $input_number){
     }
 
     return null;
+}
+
+function parse_duration($duration_in_seconds){
+    $duration = "";
+
+    if($duration_in_seconds > 60){
+        $duration .= floor($duration_in_seconds / 60) . " min";
+        $duration_in_seconds = $duration_in_seconds % 60;
+    }
+
+    if($duration_in_seconds > 0){
+        if($duration != ""){
+            $duration .= ", ";
+        }
+
+        $duration .= $duration_in_seconds . " sec";
+    }
+
+    return $duration . ".";
 }

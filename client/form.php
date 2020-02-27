@@ -64,9 +64,9 @@ if(($success = upload_file()) == true){
                         <tr>
                             <th scope="row"><?php echo $idx ?></th>
                             <td><?php echo $customer['calls_in_continent'] ?></td>
-                            <td><?php echo $customer['duration_in_continent'] ?> seconds</td>
+                            <td><?php echo $customer['duration_in_continent'] ?></td>
                             <td><?php echo $customer['calls'] ?></td>
-                            <td><?php echo $customer['duration'] ?> seconds</td>
+                            <td><?php echo $customer['duration'] ?></td>
                         </tr>
                         <?php
                     }
