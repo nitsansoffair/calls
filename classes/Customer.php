@@ -3,19 +3,17 @@
 
 class Customer {
     private $id;
-    private $continent;
     private $calls_in_continent = 0;
     private $duration_in_continent = 0;
     private $calls = 0;
     private $duration_calls = 0;
 
-    function __construct($id, $continent){
+    function __construct($id){
         $this->id = $id;
-        $this->continent = $continent;
     }
 
-    function add_call($continent, $duration){
-        if($continent == $this->continent){
+    function add_call($continent_number, $continent_ip, $duration){
+        if($continent_number == $continent_ip){
             $this->calls_in_continent++;
             $this->duration_in_continent += $duration;
         }

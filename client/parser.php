@@ -24,17 +24,23 @@ function parse_customers($file_route){
         $customers = [];
 
         while (($line = fgetcsv($calls, 100, ",")) != false) {
-            [$customer_id, $ip, $number_prefix, $duration] = [$line[0], $line[4], substr($line[3], 2, 3), $line[2]];
+            $number = str_replace(".", "", $line[3]);
+            [$customer_id, $ip, $number_prefix, $duration] = [$line[0], $line[4], substr($number, 0, 3), $line[2]];
+            $continent_number = get_continent($geonames, $number_prefix);
 
-            if(isset($geonames[$number_prefix])){
-                $continent_number = $geonames[$number_prefix];
+            if(isset($continent_number)){
                 $call = new Call($customer_id, $ip, $duration, $continent_number);
 
                 if(!isset($customers[$customer_id])){
-                    $customers[$customer_id] = new Customer($customer_id, $call->get_continent_ip());
+                    $customers[$customer_id] = new Customer($customer_id);
                 }
 
-                $customers[$customer_id]->add_call($continent_number, $duration);
+                if($call->has_continent_ip()){
+                    $customers[$customer_id]->add_call($continent_number, $call->get_continent_ip(), $duration);
+                }
+            } else {
+                error_log("error get continent number of customer id " . $customer_id . " with number prefix: " . $number_prefix .
+                    " and number " . $line[3]);
             }
         }
 
@@ -51,14 +57,34 @@ function get_geonames(){
         while (($line = fgetcsv($geonames, 500, "\t")) != false) {
             [$continent, $number] = [$line[8], str_replace("-", "", str_replace("+", "", $line[12]))];
 
-            if ($number != null) {
+            if(strpos($number, " and ") != false){
+                $numbers = explode(" and ", $number, 2);
+                $geonames_array[$numbers[0]] = $continent;
+                $geonames_array[$numbers[1]] = $continent;
+            } else if ($number != null && is_numeric($number)) {
                 $geonames_array[$number] = $continent;
             }
         }
 
         fclose($geonames);
 
+        ksort($geonames_array, SORT_NUMERIC);
+
         return $geonames_array;
+    }
+
+    return null;
+}
+
+function get_continent($geonames, $input_number){
+    if(isset($geonames[$input_number])){
+        return $geonames[$input_number];
+    }
+
+    foreach ($geonames as $prefix => $continent){
+        if(strpos($input_number, $prefix, 0) == 0){
+            return $continent;
+        }
     }
 
     return null;
