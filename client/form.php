@@ -37,7 +37,7 @@ if(($success = upload_file()) == true){
                 if(isset($_GET["file_route"])){
                     $file_name = basename($_FILES["file"]["name"]);
 
-                    echo "<div class='alert alert-info' role='alert'>File $file_name uploaded.</div>";
+                    echo "<div class='alert alert-info' role='alert'>File $file_name has been uploaded.</div>";
                 } else if(isset($_GET["error"])){
                     $error = $_GET["error"];
 
