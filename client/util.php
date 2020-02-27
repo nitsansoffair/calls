@@ -22,6 +22,7 @@ function upload_file(){
         }
 
         $_GET["error"] = "Error uploading file.";
-        return false;
     }
+
+    return false;
 }

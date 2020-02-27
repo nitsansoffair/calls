@@ -1,8 +1,7 @@
 <?php
 
 
-class Call
-{
+class Call {
     private $customer_id;
     private $ip;
     private $continent_ip;

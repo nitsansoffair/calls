@@ -43,6 +43,7 @@ if(($success = upload_file()) == true){
 
                     echo "<div class='alert alert-danger' role='alert'>$error</div>";
                 }
+
                 ?>
             </div>
         </div>
@@ -58,6 +59,7 @@ if(($success = upload_file()) == true){
             </thead>
             <tbody>
             <?php
+
                 if(isset($customers)) {
                     foreach ($customers as $idx => $customer) {
                         ?>
@@ -71,6 +73,7 @@ if(($success = upload_file()) == true){
                         <?php
                     }
                 }
+
             ?>
             </tbody>
         </table>

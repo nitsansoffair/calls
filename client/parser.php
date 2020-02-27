@@ -1,5 +1,6 @@
 <?php
-require_once '../classes/call.php';
+
+require_once '../classes/Call.php';
 require_once '../classes/Customer.php';
 
 function customers_to_array($file_route){
