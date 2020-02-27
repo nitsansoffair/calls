@@ -50,6 +50,10 @@ function parse_customers($file_route){
 
         return $customers;
     }
+
+    error_log("Error open " . $file_route . "file.");
+
+    return null;
 }
 
 function get_geonames(){
@@ -74,6 +78,8 @@ function get_geonames(){
 
         return $geonames_array;
     }
+
+    error_log("Error open file at route '../data/geonames.txt' file.");
 
     return null;
 }
